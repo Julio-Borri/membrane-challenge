@@ -25,7 +25,9 @@ const actionDispatcher = (dispatch: Dispatch<Actions>) => {
     });
   };
 
-  // TODO: Add function description
+  /**
+   * Connect the logged metamask account to the current site.
+   */
   const handleConnect = async (): Promise<void> => {
     try {
       // Get network provider and web3 instance.
@@ -62,6 +64,10 @@ const actionDispatcher = (dispatch: Dispatch<Actions>) => {
     }
   };
 
+  /**
+   * Switch the connection to the ethereum target chain.
+   * @param chainId Id for the network to change to.
+   */
   const handleChangeNetwork = async (chainId: string): Promise<void> => {
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',

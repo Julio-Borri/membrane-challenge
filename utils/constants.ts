@@ -3,11 +3,13 @@ const wording: { [key: string]: string } = {
   PAGE_TITLE: 'Membrane', 
   PAGE_SUBTITLE: 'FrontEnd Challenge',
 
-  CONNECT_TO_METAMASK: 'To enjoy the full experience please connect to Metamask',
-  CONNECT_TO_ROPSTEN: 'To enjoy the full experience please connect to Ropsten Network',
+  METAMASK_CARD_TITLE: 'Metamask',
+  NETWORK_CARD_TITLE: 'Network',
   CONNECTED_TO_NETWORK: 'Already connected to Network:',
   CONNECT_METAMASK_LABEL: 'Connect to Metamask',
   CONNECT_ROPSTEN_LABEL: 'Connect to Ropsten',
+  ALREADY_CONNECTED: 'Conected',
+  ROPSTEN_CONNECTED: 'Conected to Ropsten',
 
   WEB3_ERROR: 'Some error occurs. Check console for details.'
 };
