@@ -9,6 +9,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Challenge fro membrane project" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <h1>Asd</h1>
     </div>
   );
 };
