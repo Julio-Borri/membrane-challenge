@@ -1,20 +1,46 @@
 // Module dependencies
-import { useReducer } from 'react';
-import '../styles/globals.css';
+import { useEffect, useReducer } from 'react';
 import type { AppProps } from 'next/app';
-import { Web3Context, web3InitialState, web3reducer } from '../state/reducers/web3Reducer';
+import { AppContext, initialState, reducer } from '../state/reducers';
+
+// Styles
+import '../styles/index.scss'
 
 // Components
+import { Layout } from 'antd';
 import NetworkManager from '../components/network-manager';
+import CustomHeader from '../components/custom-header';
+import actionDispatcher from '../state/action-dipatchers';
+
+const { Header, Footer, Sider, Content } = Layout;
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const [web3State, web3dispatch] = useReducer(web3reducer, web3InitialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const actions = actionDispatcher(dispatch);
+
+  useEffect(() => {
+    const checkSiteAlreadyConnected = async (): Promise<void> => {
+      const accounts = await window.ethereum
+        .request({ method: 'eth_accounts' });
+
+      if (accounts.length > 0)
+        actions.handleConnect();
+    };
+
+    checkSiteAlreadyConnected();
+  }, []);
+  
 
   return (
-    <Web3Context.Provider value={{ web3State, web3dispatch }}>
-      <NetworkManager />
-      <Component {...pageProps} />
-    </Web3Context.Provider>
+    <AppContext.Provider value={{ state, dispatch }}>
+      <Layout>
+        <CustomHeader />
+      <Content>
+        <Component {...pageProps} />
+      </Content>
+      </Layout>
+    </AppContext.Provider>
   );
 };
 

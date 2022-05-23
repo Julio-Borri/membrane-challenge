@@ -1,16 +1,16 @@
-import { Web3ActionTypes } from '../action-types';
-import { Web3State } from '../interfaces/web3Interfaces';
+import { ActionTypes } from '../action-types';
+import { AppState } from '../interfaces';
 
 interface SetCurrentChainAction {
-  type: Web3ActionTypes.SET_CURRENT_CHAIN;
+  type: ActionTypes.SET_CURRENT_CHAIN;
   payload: string;
 }
 
 interface SetContractDataAction {
-  type: Web3ActionTypes.SET_CONTRACT_DATA;
-  payload: Web3State;
+  type: ActionTypes.SET_CONTRACT_DATA;
+  payload: AppState;
 }
 
-export type Web3Actions =
+export type Actions =
   | SetCurrentChainAction
   | SetContractDataAction;

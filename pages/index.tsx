@@ -1,5 +1,9 @@
+// Module dependencies
 import type { NextPage } from 'next';
+
+// UI Components
 import Head from 'next/head';
+import NetworkManager from '../components/network-manager';
 
 const Home: NextPage = () => {
   return (
@@ -9,7 +13,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Challenge fro membrane project" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Asd</h1>
+      <NetworkManager />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 // Module dependencies
 import { Dispatch } from "react";
-import { Web3Actions } from "../actions";
-import { Web3ActionTypes } from "../action-types";
+import { Actions } from "../actions";
+import { ActionTypes } from "../action-types";
 import getWeb3 from '../../configs/web3';
 
 // Assets
@@ -9,14 +9,14 @@ import { contractAddress, wording } from '../../utils/constants';
 import { QuizTokenABI } from '../../contracts/QuizTokenABI';
 
 
-const web3Disptacher = (dispatch: Dispatch<Web3Actions>): void => {
-  const { SET_CURRENT_CHAIN, SET_CONTRACT_DATA } = Web3ActionTypes
+const actionDispatcher = (dispatch: Dispatch<Actions>) => {
+  const { SET_CURRENT_CHAIN, SET_CONTRACT_DATA } = ActionTypes
   const { WEB3_ERROR } = wording;
 
   /**
    * Detect the current network chain Id and save it in context.
    */
-  const handleNetworkChange = async () => {
+  const handleNetworkChange = async (): Promise<void> => {
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
 
     dispatch({
@@ -26,7 +26,7 @@ const web3Disptacher = (dispatch: Dispatch<Web3Actions>): void => {
   };
 
   // TODO: Add function description
-  const handleConnect = async () => {
+  const handleConnect = async (): Promise<void> => {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
@@ -61,6 +61,15 @@ const web3Disptacher = (dispatch: Dispatch<Web3Actions>): void => {
       console.error(error);
     }
   };
+
+  const handleChangeNetwork = async (chainId: string): Promise<void> => {
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId }],
+    });
+  };
+
+  return { handleConnect, handleChangeNetwork };
 };
 
-export default web3Disptacher;
+export default actionDispatcher;
