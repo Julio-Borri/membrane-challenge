@@ -3,7 +3,7 @@ import { Dispatch } from "react";
 import { Actions } from "../actions";
 import { ActionTypes } from "../action-types";
 import getWeb3 from '../../configs/web3';
-import { AppState, Survey } from '../interfaces';
+import { AppState, SurveyInterface } from '../interfaces';
 
 // Assets
 import { contractAddress, wording } from '../../utils/constants';
@@ -18,7 +18,7 @@ const actionDispatcher = (
     SET_CURRENT_CHAIN,
     SET_CONTRACT_DATA,
     SET_QUIZ_TOKEN_BALANCE,
-    SET_DAILY_TRIVIA
+    SET_AVAILABLE_TRIVIAS
   } = ActionTypes
   const { WEB3_ERROR } = wording;
 
@@ -97,9 +97,9 @@ const actionDispatcher = (
     });
   };
 
-  const setDailyTrivia = async (data: Survey) => {
+  const setavailableTrivias = async (data: Array<SurveyInterface>) => {
     dispatch({
-      type: SET_DAILY_TRIVIA,
+      type: SET_AVAILABLE_TRIVIAS,
       payload: data,
     });
   }
@@ -108,7 +108,7 @@ const actionDispatcher = (
     handleConnect,
     handleChangeNetwork,
     getQuizTokenBalance,
-    setDailyTrivia,
+    setavailableTrivias,
   };
 };
 

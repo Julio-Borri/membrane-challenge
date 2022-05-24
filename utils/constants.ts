@@ -3,6 +3,7 @@ const wording: { [key: string]: string } = {
   PAGE_TITLE: 'Membrane FE Challenge', 
   PAGE_SUBTITLE: 'FE Challenge fro RatherLabs',
 
+  // Network Manager
   METAMASK_CARD_TITLE: 'Metamask',
   NETWORK_CARD_TITLE: 'Network',
   TOKEN_CARD_TITLE: 'Quiz Token Balance',
@@ -12,6 +13,10 @@ const wording: { [key: string]: string } = {
   UPDATE_TOKENS_LABEL: 'Update',
   ALREADY_CONNECTED: 'Conected',
   ROPSTEN_CONNECTED: 'Conected to Ropsten',
+
+  // Survey
+  AVAILABLE_SURVEYS: 'Available surveys',
+  COMPLETE_CONNECTION: 'Please connect to Metamask and Ropsten Network',
 
   WEB3_ERROR: 'Some error occurs. Check console for details.'
 };

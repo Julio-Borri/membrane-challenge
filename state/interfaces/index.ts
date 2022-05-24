@@ -10,7 +10,8 @@ export interface AppState {
   currentChain: string;
   networkState: NetworkSates;
   quizTokenBalance: string;
-  dailyTrivia: Survey;
+  availableTrivias: Array<SurveyInterface>;
+  activeTrivia: SurveyInterface;
 }
 
 interface SurveyQuestionOptions {
@@ -24,7 +25,7 @@ export interface SurveyQuestion {
   options: Array<SurveyQuestionOptions>
 }
 
-export interface Survey {
+export interface SurveyInterface {
   title: string;
   image: string;
   questions: Array<SurveyQuestion>;

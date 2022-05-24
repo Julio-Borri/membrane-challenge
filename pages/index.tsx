@@ -3,30 +3,31 @@ import { useContext, useEffect } from 'react';
 import type { GetStaticProps, NextPage } from 'next';
 import path from 'path';
 import fs from 'fs/promises';
-import { Survey } from '../state/interfaces';
+import {SurveyInterface } from '../state/interfaces';
 import { AppContext } from '../state/reducers';
 import actionDispatcher from '../state/action-dipatchers';
 
 // UI Components
 import Head from 'next/head';
 import NetworkManager from '../components/network-manager';
+import SurveyManager from '../components/survey-manager';
 
 // Assets
 import { wording } from '../utils/constants';
 
 
 interface HomeProps {
-  dailySurvey: Survey;
+  availableTrivias: Array<SurveyInterface>;
 }
 
-const Home: NextPage<HomeProps> = ({ dailySurvey }) => {
+const Home: NextPage<HomeProps> = ({ availableTrivias }) => {
   const { state, dispatch } = useContext(AppContext);
   const actions = actionDispatcher(state, dispatch);
 
   const { PAGE_TITLE, PAGE_SUBTITLE } = wording;
 
   useEffect(() => {
-    actions.setDailyTrivia(dailySurvey);
+    actions.setavailableTrivias(availableTrivias);
   }, [])
   
   return (
@@ -37,6 +38,7 @@ const Home: NextPage<HomeProps> = ({ dailySurvey }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NetworkManager />
+      <SurveyManager />
     </div>
   );
 };
@@ -48,7 +50,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: {
-      dailySurvey: data,
+      availableTrivias: data,
     }
   };
 }

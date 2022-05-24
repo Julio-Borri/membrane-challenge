@@ -13,7 +13,12 @@ const initialState: AppState = {
   currentChain: '',
   networkState: NetworkSates.UNCONNECTED,
   quizTokenBalance: '0',
-  dailyTrivia: null,
+  availableTrivias: [],
+  activeTrivia: {
+    title: '',
+    image: '',
+    questions: [],
+  },
 };
 
 const AppContext = createContext<{
@@ -32,7 +37,7 @@ const reducer = (
     SET_CURRENT_CHAIN,
     SET_CONTRACT_DATA,
     SET_QUIZ_TOKEN_BALANCE,
-    SET_DAILY_TRIVIA
+    SET_AVAILABLE_TRIVIAS
   } = ActionTypes
 
   switch (action.type) {
@@ -58,10 +63,10 @@ const reducer = (
         quizTokenBalance: action.payload,
       };
 
-    case SET_DAILY_TRIVIA:
+    case SET_AVAILABLE_TRIVIAS:
       return {
         ...state,
-        dailyTrivia: action.payload,
+        availableTrivias: action.payload,
       };
 
     default:
