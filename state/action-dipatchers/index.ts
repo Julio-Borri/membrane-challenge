@@ -3,14 +3,23 @@ import { Dispatch } from "react";
 import { Actions } from "../actions";
 import { ActionTypes } from "../action-types";
 import getWeb3 from '../../configs/web3';
+import { AppState, Survey } from '../interfaces';
 
 // Assets
 import { contractAddress, wording } from '../../utils/constants';
 import { QuizTokenABI } from '../../contracts/QuizTokenABI';
 
 
-const actionDispatcher = (dispatch: Dispatch<Actions>) => {
-  const { SET_CURRENT_CHAIN, SET_CONTRACT_DATA } = ActionTypes
+const actionDispatcher = (
+  state: AppState,
+  dispatch: Dispatch<Actions>
+) => {
+  const {
+    SET_CURRENT_CHAIN,
+    SET_CONTRACT_DATA,
+    SET_QUIZ_TOKEN_BALANCE,
+    SET_DAILY_TRIVIA
+  } = ActionTypes
   const { WEB3_ERROR } = wording;
 
   /**
@@ -75,7 +84,32 @@ const actionDispatcher = (dispatch: Dispatch<Actions>) => {
     });
   };
 
-  return { handleConnect, handleChangeNetwork };
+  const getQuizTokenBalance = async () => {
+    const { accounts, contract } = state;
+      
+    const balance = await contract.methods
+      .balanceOf(accounts[0])
+      .call();
+
+    dispatch({
+      type: SET_QUIZ_TOKEN_BALANCE,
+      payload: balance,
+    });
+  };
+
+  const setDailyTrivia = async (data: Survey) => {
+    dispatch({
+      type: SET_DAILY_TRIVIA,
+      payload: data,
+    });
+  }
+
+  return {
+    handleConnect,
+    handleChangeNetwork,
+    getQuizTokenBalance,
+    setDailyTrivia,
+  };
 };
 
 export default actionDispatcher;

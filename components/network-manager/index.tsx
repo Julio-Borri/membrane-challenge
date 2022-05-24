@@ -1,5 +1,5 @@
 // Module dependencies
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from '../../state/reducers';
 import actionDispatcher from '../../state/action-dipatchers';
 
@@ -14,20 +14,28 @@ import { wording, ropstenChainId } from '../../utils/constants';
 
 const NetworkManager: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { networkState, currentChain } = state;
+  const { networkState, currentChain, quizTokenBalance } = state;
 
   const { CONNECTED } = NetworkSates;
   const {
     ALREADY_CONNECTED,
     CONNECT_METAMASK_LABEL,
     CONNECT_ROPSTEN_LABEL,
+    UPDATE_TOKENS_LABEL,
     METAMASK_CARD_TITLE,
     NETWORK_CARD_TITLE,
+    TOKEN_CARD_TITLE,
     ROPSTEN_CONNECTED,
     
   } = wording;
 
-  const actions = actionDispatcher(dispatch);
+  const actions = actionDispatcher(state, dispatch);
+
+  useEffect(() => {
+    if (currentChain === ropstenChainId) {
+      actions.getQuizTokenBalance();
+    }
+  }, [networkState, currentChain, quizTokenBalance]);
 
   console.log(state);
   
@@ -54,9 +62,13 @@ const NetworkManager: React.FC = () => {
           />
         </Col>
         <Col xs={24} sm={8}>
-          <Card title="Card title">
-            Card content
-          </Card>
+          <StatusCard
+            cardTitle={TOKEN_CARD_TITLE}
+            buttonLabel={UPDATE_TOKENS_LABEL}
+            successCondition={true}
+            successText={`${quizTokenBalance}`}
+            handler={actions.getQuizTokenBalance}
+          />
         </Col>
       </Row>
     </div>

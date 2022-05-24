@@ -1,13 +1,15 @@
 // General wording
 const wording: { [key: string]: string } = {
-  PAGE_TITLE: 'Membrane', 
-  PAGE_SUBTITLE: 'FrontEnd Challenge',
+  PAGE_TITLE: 'Membrane FE Challenge', 
+  PAGE_SUBTITLE: 'FE Challenge fro RatherLabs',
 
   METAMASK_CARD_TITLE: 'Metamask',
   NETWORK_CARD_TITLE: 'Network',
+  TOKEN_CARD_TITLE: 'Quiz Token Balance',
   CONNECTED_TO_NETWORK: 'Already connected to Network:',
   CONNECT_METAMASK_LABEL: 'Connect to Metamask',
   CONNECT_ROPSTEN_LABEL: 'Connect to Ropsten',
+  UPDATE_TOKENS_LABEL: 'Update',
   ALREADY_CONNECTED: 'Conected',
   ROPSTEN_CONNECTED: 'Conected to Ropsten',
 

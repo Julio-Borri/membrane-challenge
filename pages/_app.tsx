@@ -17,7 +17,7 @@ const { Header, Footer, Sider, Content } = Layout;
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const actions = actionDispatcher(dispatch);
+  const actions = actionDispatcher(state, dispatch);
 
   useEffect(() => {
     const checkSiteAlreadyConnected = async (): Promise<void> => {
@@ -30,7 +30,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
     checkSiteAlreadyConnected();
   }, []);
-  
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

@@ -21,8 +21,6 @@ const StatusCard: React.FC<StatusCardProps> = ({
   handler,
   disableButton
 }) => {
-  console.log(successCondition);
-  
   return (
     <Card title={cardTitle}>
       <Space>

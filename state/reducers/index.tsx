@@ -4,7 +4,6 @@ import { AppState, NetworkSates } from '../interfaces';
 import { Actions } from '../actions/index';
 import { ActionTypes } from '../action-types/index';
 
-// const AppContext = createContext(null);
 
 const initialState: AppState = {
   // NetworkState
@@ -13,6 +12,8 @@ const initialState: AppState = {
   contract: null,
   currentChain: '',
   networkState: NetworkSates.UNCONNECTED,
+  quizTokenBalance: '0',
+  dailyTrivia: null,
 };
 
 const AppContext = createContext<{
@@ -27,7 +28,12 @@ const reducer = (
   state: AppState,
   action: Actions
 ): AppState => {
-  const { SET_CURRENT_CHAIN, SET_CONTRACT_DATA } = ActionTypes
+  const {
+    SET_CURRENT_CHAIN,
+    SET_CONTRACT_DATA,
+    SET_QUIZ_TOKEN_BALANCE,
+    SET_DAILY_TRIVIA
+  } = ActionTypes
 
   switch (action.type) {
     case SET_CURRENT_CHAIN:
@@ -44,6 +50,18 @@ const reducer = (
         contract: action.payload.contract,
         currentChain: action.payload.currentChain,
         networkState: NetworkSates.CONNECTED,
+      };
+
+    case SET_QUIZ_TOKEN_BALANCE:
+      return {
+        ...state,
+        quizTokenBalance: action.payload,
+      };
+
+    case SET_DAILY_TRIVIA:
+      return {
+        ...state,
+        dailyTrivia: action.payload,
       };
 
     default:

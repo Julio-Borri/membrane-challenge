@@ -1,4 +1,7 @@
-export const mockSurvey = {
+// Module dependencies
+import { Survey } from "../state/interfaces";
+
+export const mockSurvey: Survey = {
   "title":"Sample Survey",
   "image":"https://48tools.com/wp-content/uploads/2015/09/shortlink.png",
   "questions":[
