@@ -17,6 +17,7 @@ const wording: { [key: string]: string } = {
   // Survey
   AVAILABLE_SURVEYS: 'Available surveys',
   COMPLETE_CONNECTION: 'Please connect to Metamask and Ropsten Network',
+  START_SURVEY: 'Click to start Survey',
 
   WEB3_ERROR: 'Some error occurs. Check console for details.'
 };

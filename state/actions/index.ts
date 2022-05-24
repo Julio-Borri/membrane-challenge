@@ -1,6 +1,6 @@
 // Module dependencies
 import { ActionTypes } from '../action-types';
-import { SurveyInterface } from '../interfaces';
+import { SurveyInterface, TriviaStates } from '../interfaces';
 
 
 interface SetCurrentChainAction {
@@ -23,13 +23,19 @@ interface SetQuizTokenBalanceAction {
   payload: string;
 }
 
-interface SetAvailableTriviasAction {
+interface setAvailableTriviasAction {
   type: ActionTypes.SET_AVAILABLE_TRIVIAS;
   payload: Array<SurveyInterface>;
+}
+
+interface initializeTriviaAction {
+  type: ActionTypes.INITIALIZE_TRIVIA;
+  payload: SurveyInterface;
 }
 
 export type Actions =
   | SetCurrentChainAction
   | SetContractDataAction
   | SetQuizTokenBalanceAction
-  | SetAvailableTriviasAction;
+  | setAvailableTriviasAction
+  | initializeTriviaAction;

@@ -35,9 +35,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <AppContext.Provider value={{ state, dispatch }}>
       <Layout>
         <CustomHeader />
-      <Content>
-        <Component {...pageProps} />
-      </Content>
+        <Content>
+          <Component {...pageProps} />
+        </Content>
       </Layout>
     </AppContext.Provider>
   );

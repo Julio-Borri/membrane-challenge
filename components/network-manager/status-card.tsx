@@ -32,9 +32,9 @@ const StatusCard: React.FC<StatusCardProps> = ({
         
         {!successCondition && (
           <Button
-            type="primary"
             onClick={handler}
             disabled={disableButton}
+            block
           >
             {buttonLabel}
           </Button>

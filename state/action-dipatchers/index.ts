@@ -3,7 +3,7 @@ import { Dispatch } from "react";
 import { Actions } from "../actions";
 import { ActionTypes } from "../action-types";
 import getWeb3 from '../../configs/web3';
-import { AppState, SurveyInterface } from '../interfaces';
+import { AppState, SurveyInterface, TriviaStates } from '../interfaces';
 
 // Assets
 import { contractAddress, wording } from '../../utils/constants';
@@ -18,7 +18,8 @@ const actionDispatcher = (
     SET_CURRENT_CHAIN,
     SET_CONTRACT_DATA,
     SET_QUIZ_TOKEN_BALANCE,
-    SET_AVAILABLE_TRIVIAS
+    SET_AVAILABLE_TRIVIAS,
+    INITIALIZE_TRIVIA
   } = ActionTypes
   const { WEB3_ERROR } = wording;
 
@@ -84,7 +85,10 @@ const actionDispatcher = (
     });
   };
 
-  const getQuizTokenBalance = async () => {
+  /**
+   * Fecth the amount of Token for the current address and save in context.
+   */
+  const getQuizTokenBalance = async (): Promise<void> => {
     const { accounts, contract } = state;
       
     const balance = await contract.methods
@@ -97,18 +101,36 @@ const actionDispatcher = (
     });
   };
 
-  const setavailableTrivias = async (data: Array<SurveyInterface>) => {
+  /**
+   * Save available trivias in context.
+   * @param data List os available trivias.
+   */
+  const setAvailableTrivias = (data: Array<SurveyInterface>): void => {
     dispatch({
       type: SET_AVAILABLE_TRIVIAS,
       payload: data,
     });
-  }
+  };
+
+  const initializeTrivia = (triviaId: number): void => {
+    const { availableTrivias } = state;
+
+    // const newTrivia = availableTrivias.find(({ id }) => (
+    //   id === triviaId
+    // ));
+
+    dispatch({
+      type: INITIALIZE_TRIVIA,
+      payload: availableTrivias.find(({ id }) => id === triviaId)
+    });
+  };
 
   return {
     handleConnect,
     handleChangeNetwork,
     getQuizTokenBalance,
-    setavailableTrivias,
+    setAvailableTrivias,
+    initializeTrivia,
   };
 };
 

@@ -8,7 +8,7 @@ import { Card, Row, Col } from 'antd';
 import StatusCard from './status-card';
 
 // Assets
-import { NetworkSates } from '../../state/interfaces';
+import { NetworkStates } from '../../state/interfaces';
 import { wording, ropstenChainId } from '../../utils/constants';
 
 
@@ -16,7 +16,7 @@ const NetworkManager: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const { networkState, currentChain, quizTokenBalance } = state;
 
-  const { CONNECTED } = NetworkSates;
+  const { CONNECTED } = NetworkStates;
   const {
     ALREADY_CONNECTED,
     CONNECT_METAMASK_LABEL,

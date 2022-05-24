@@ -27,7 +27,7 @@ const Home: NextPage<HomeProps> = ({ availableTrivias }) => {
   const { PAGE_TITLE, PAGE_SUBTITLE } = wording;
 
   useEffect(() => {
-    actions.setavailableTrivias(availableTrivias);
+    actions.setAvailableTrivias(availableTrivias);
   }, [])
   
   return (

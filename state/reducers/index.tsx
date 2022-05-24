@@ -1,6 +1,6 @@
 // Module dependencies
 import { createContext, Dispatch } from 'react';
-import { AppState, NetworkSates } from '../interfaces';
+import { AppState, NetworkStates, TriviaStates } from '../interfaces';
 import { Actions } from '../actions/index';
 import { ActionTypes } from '../action-types/index';
 
@@ -11,14 +11,18 @@ const initialState: AppState = {
   accounts: null,
   contract: null,
   currentChain: '',
-  networkState: NetworkSates.UNCONNECTED,
+  networkState: NetworkStates.UNCONNECTED,
+
+  // Trivia State
   quizTokenBalance: '0',
   availableTrivias: [],
   activeTrivia: {
+    id: 0,
     title: '',
     image: '',
     questions: [],
   },
+  triviaState: TriviaStates.UNSTARTED, 
 };
 
 const AppContext = createContext<{
@@ -37,7 +41,8 @@ const reducer = (
     SET_CURRENT_CHAIN,
     SET_CONTRACT_DATA,
     SET_QUIZ_TOKEN_BALANCE,
-    SET_AVAILABLE_TRIVIAS
+    SET_AVAILABLE_TRIVIAS,
+    INITIALIZE_TRIVIA
   } = ActionTypes
 
   switch (action.type) {
@@ -54,7 +59,7 @@ const reducer = (
         accounts: action.payload.accounts,
         contract: action.payload.contract,
         currentChain: action.payload.currentChain,
-        networkState: NetworkSates.CONNECTED,
+        networkState: NetworkStates.CONNECTED,
       };
 
     case SET_QUIZ_TOKEN_BALANCE:
@@ -67,6 +72,13 @@ const reducer = (
       return {
         ...state,
         availableTrivias: action.payload,
+      };
+
+    case INITIALIZE_TRIVIA:
+      return {
+        ...state,
+        triviaState: TriviaStates.ONGOING,
+        activeTrivia: action.payload,
       };
 
     default:
