@@ -1,27 +1,32 @@
 // Module dependencies
 import { useContext } from 'react';
-import { AppContext } from '../../state/reducers';
+import { AppContext } from '../../../state/reducers';
 
 // UI Components
 import { Button, Typography, Card, Statistic, Space } from 'antd';
 
-const { Text, Title } = Typography;
+// Assets
+import { wording } from '../../../utils/constants';
+
+const { Title } = Typography;
+
 
 interface SurveyPreviewProps {
   handleSubmitSurvey: () => Promise<void>;
 }
 
 const SurveyPreview: React.FC<SurveyPreviewProps> = ({ handleSubmitSurvey }) => {
-  const { state, dispatch } = useContext(AppContext);
+  const { state } = useContext(AppContext);
 
   const { answers } = state;
+  const { SURVEY_PREVIEW, SUBMIT_SURVEY } = wording;
 
   return (
     <div>
       <Space className="preview-container">
-        <Title level={3}>Survey Overview</Title>
+        <Title level={3}>{SURVEY_PREVIEW}</Title>
         <Button onClick={handleSubmitSurvey}>
-          Submit Survey
+          {SUBMIT_SURVEY}
         </Button>
       </Space>
 

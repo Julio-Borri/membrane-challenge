@@ -31,6 +31,7 @@ const initialState: AppState = {
   errorMsg: '',
 };
 
+// Global App State
 const AppContext = createContext<{
   state: AppState;
   dispatch: Dispatch<Actions>;
@@ -39,12 +40,16 @@ const AppContext = createContext<{
   dispatch: () => null
 });
 
+/**
+ * Function to handle state changes given an action.type case.
+ * @param {Object} state Current state.
+ * @param {Object} action Plain JS Object. Must have a type property.
+ * @returns New state.
+ */
 const reducer = (
   state: AppState,
   action: Actions
 ): AppState => {
-
-
   switch (action.type) {
     case ActionTypes.SET_CURRENT_CHAIN:
       return {

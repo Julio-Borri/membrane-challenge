@@ -5,7 +5,7 @@ import type { RadioChangeEvent } from 'antd';
 import { Form, Avatar, Space, Radio, Typography } from 'antd';
 
 // Assets
-import { SurveyQuestion } from '../../state/interfaces';
+import { SurveyQuestion } from '../../../state/interfaces';
 
 const { Text } = Typography;
 
@@ -19,7 +19,7 @@ const SurveyQuestion: React.FC<SurveyQuestionProps> = ({
   question,
   handleRadioChange,
 }) => {
-  const { text, image, lifetimeSeconds, options} = question;
+  const { text, image, options} = question;
 
   return (
     <Form.Item

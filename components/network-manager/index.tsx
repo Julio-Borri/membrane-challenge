@@ -4,7 +4,7 @@ import { AppContext } from '../../state/reducers';
 import actionDispatcher from '../../state/action-dipatchers';
 
 // UI Components
-import { Card, Row, Col } from 'antd';
+import { Row, Col } from 'antd';
 import StatusCard from './status-card';
 
 // Assets
@@ -26,7 +26,6 @@ const NetworkManager: React.FC = () => {
     NETWORK_CARD_TITLE,
     TOKEN_CARD_TITLE,
     ROPSTEN_CONNECTED,
-    
   } = wording;
 
   const actions = actionDispatcher(state, dispatch);
@@ -37,8 +36,6 @@ const NetworkManager: React.FC = () => {
     }
   }, [networkState, currentChain, quizTokenBalance]);
 
-  console.log(state);
-  
   return (
     <div className="manager-container">
       <Row gutter={[16, 16]}>
@@ -51,6 +48,7 @@ const NetworkManager: React.FC = () => {
             handler={actions.handleConnect}
           />
         </Col>
+
         <Col xs={24} sm={8}>
           <StatusCard
             cardTitle={NETWORK_CARD_TITLE}
@@ -61,6 +59,7 @@ const NetworkManager: React.FC = () => {
             disableButton={networkState !== CONNECTED}
           />
         </Col>
+
         <Col xs={24} sm={8}>
           <StatusCard
             cardTitle={TOKEN_CARD_TITLE}

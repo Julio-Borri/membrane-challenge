@@ -1,13 +1,13 @@
 // Module dependencies
 import { useContext } from 'react';
-import { AppContext } from '../../state/reducers';
-import actionDispatcher from '../../state/action-dipatchers';
+import { AppContext } from '../../../state/reducers';
+import actionDispatcher from '../../../state/action-dipatchers';
 
 // UI Components
 import { Button, Card } from 'antd';
 
 // Assets
-import { wording } from '../../utils/constants';
+import { wording } from '../../../utils/constants';
 
 const { Meta } = Card;
 

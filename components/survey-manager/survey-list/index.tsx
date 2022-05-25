@@ -1,17 +1,17 @@
 // Module dependencies
 import { useContext } from 'react';
-import { AppContext } from '../../state/reducers';
+import { AppContext } from '../../../state/reducers';
 
 // UI Components
 import { Row, Col } from 'antd';
 import SurveyCard from './survey-card';
 
 // Assets
-import { SurveyInterface } from '../../state/interfaces';
+import { SurveyInterface } from '../../../state/interfaces';
 
 
 const SurveyList: React.FC = () => {
-  const { state, dispatch } = useContext(AppContext);
+  const { state } = useContext(AppContext);
   const { availableTrivias } = state;
 
   return (

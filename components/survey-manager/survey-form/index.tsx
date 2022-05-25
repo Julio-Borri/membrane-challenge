@@ -1,27 +1,24 @@
 // Module dependencies
-import { useContext, useState, useEffect } from 'react';
-import { AppContext } from '../../state/reducers';
-import actionDispatcher from '../../state/action-dipatchers';
+import { useContext } from 'react';
+import { AppContext } from '../../../state/reducers';
 
 // UI Components
 import { Form, Typography } from 'antd';
 import SurveyQuestion from './survey-question';
-import useForm from '../../hooks/useForm';
+import useForm from '../../../hooks/useForm';
 import SurveyPreview from './survey-preview';
 
 // Assets
-import { NetworkStates, TriviaStates } from '../../state/interfaces';
+import { TriviaStates } from '../../../state/interfaces';
 
 
 const { Title } = Typography;
 
 const SurveyForm: React.FC = () => {
-  const { state, dispatch } = useContext(AppContext);
-  const actions = actionDispatcher(state, dispatch);
+  const { state } = useContext(AppContext);
 
   const { activeTrivia, triviaState } = state;
   const { title, questions } = activeTrivia;
-
 
   const { currentQuestion, handleRadioChange, handleSubmitSurvey } = useForm();
   
@@ -50,7 +47,6 @@ const SurveyForm: React.FC = () => {
       )}
     </div>
   );
-};
-
+}
 
 export default SurveyForm;

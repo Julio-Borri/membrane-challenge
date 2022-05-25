@@ -6,7 +6,7 @@ import { wording  } from '../../utils/constants';
 
 
 const CustomHeader: React.FC = () => {
-  const { PAGE_TITLE, PAGE_SUBTITLE } = wording;
+  const { PAGE_TITLE } = wording;
 
   return (
     <PageHeader

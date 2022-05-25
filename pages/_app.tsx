@@ -2,20 +2,20 @@
 import { useEffect, useReducer } from 'react';
 import type { AppProps } from 'next/app';
 import { AppContext, initialState, reducer } from '../state/reducers';
+import actionDispatcher from '../state/action-dipatchers';
 
 // Styles
 import '../styles/index.scss'
 
-// Components
-import { Layout } from 'antd';
-import NetworkManager from '../components/network-manager';
+// UI Components
+import { Layout, Alert, Spin } from 'antd';
 import CustomHeader from '../components/custom-header';
-import actionDispatcher from '../state/action-dipatchers';
-import { Alert, Spin } from 'antd';
+
+// Assets
 import { wording } from '../utils/constants';
 
+const { Content } = Layout;
 
-const { Header, Footer, Sider, Content } = Layout;
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -23,9 +23,12 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const actions = actionDispatcher(state, dispatch);
 
   const { error, errorMsg, loading } = state;
-  const { PAGE_TITLE, PAGE_SUBTITLE, WEB3_ERROR } = wording;
+  const { WEB3_ERROR } = wording;
 
-
+  /**
+   * Check if the site is already connected on metamask and
+   * update the global state. 
+   */
   useEffect(() => {
     const checkSiteAlreadyConnected = async (): Promise<void> => {
       const accounts = await window.ethereum

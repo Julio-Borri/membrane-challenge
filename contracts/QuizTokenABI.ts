@@ -1,5 +1,5 @@
 // import { AbiItem } from 'web3-utils';
-// TODO: Check differences with the AbiItem
+// TODO: Check differences with the AbiItem Interface
 
 export const QuizTokenABI: Array<any> = [
   {
