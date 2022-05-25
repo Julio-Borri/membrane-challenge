@@ -21,8 +21,6 @@ const StatusCard: React.FC<StatusCardProps> = ({
   handler,
   disableButton
 }) => {
-  console.log(successCondition);
-  
   return (
     <Card title={cardTitle}>
       <Space>
@@ -34,9 +32,9 @@ const StatusCard: React.FC<StatusCardProps> = ({
         
         {!successCondition && (
           <Button
-            type="primary"
             onClick={handler}
             disabled={disableButton}
+            block
           >
             {buttonLabel}
           </Button>

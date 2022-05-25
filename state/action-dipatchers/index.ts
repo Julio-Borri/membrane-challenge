@@ -5,13 +5,32 @@ import { ActionTypes } from "../action-types";
 import getWeb3 from '../../configs/web3';
 
 // Assets
+import { AppState, SurveyInterface } from '../interfaces';
 import { contractAddress, wording } from '../../utils/constants';
 import { QuizTokenABI } from '../../contracts/QuizTokenABI';
 
-
-const actionDispatcher = (dispatch: Dispatch<Actions>) => {
-  const { SET_CURRENT_CHAIN, SET_CONTRACT_DATA } = ActionTypes
+/**
+ * Responsible to dispatch actions to keep the status update.
+ * @param state App global state.
+ * @param dispatch Action disptahcer.
+ * @returns Set of function to dipatch actions.
+ */
+const actionDispatcher = (
+  state: AppState,
+  dispatch: Dispatch<Actions>
+) => {
   const { WEB3_ERROR } = wording;
+
+  /**
+   * Handle error and update global state.
+   * @param error Error.
+   */
+  const handleError = (error: ProviderRpcError): void => {
+    dispatch({
+      type: ActionTypes.SET_ERROR,
+      payload: error.message,
+    });
+  }
 
   /**
    * Detect the current network chain Id and save it in context.
@@ -20,7 +39,7 @@ const actionDispatcher = (dispatch: Dispatch<Actions>) => {
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
 
     dispatch({
-      type: SET_CURRENT_CHAIN,
+      type: ActionTypes.SET_CURRENT_CHAIN,
       payload: chainId,
     });
   };
@@ -48,7 +67,7 @@ const actionDispatcher = (dispatch: Dispatch<Actions>) => {
 
       // Set web3, accounts, and contract to the state
       dispatch({
-        type: SET_CONTRACT_DATA,
+        type: ActionTypes.SET_CONTRACT_DATA,
         payload: {
           currentChain: `0x${networkId}`,
           web3,
@@ -57,10 +76,8 @@ const actionDispatcher = (dispatch: Dispatch<Actions>) => {
         }
       });
 
-    } catch (error) {
-      // TODO: Save error in context. Display a Modal with information
-      alert(WEB3_ERROR);
-      console.error(error);
+    } catch (error: any) {
+      handleError(error);
     }
   };
 
@@ -69,13 +86,116 @@ const actionDispatcher = (dispatch: Dispatch<Actions>) => {
    * @param chainId Id for the network to change to.
    */
   const handleChangeNetwork = async (chainId: string): Promise<void> => {
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId }],
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId }],
+      });
+    } catch (error: any) {
+      handleError(error);
+    }
+  };
+
+  /**
+   * Fecth the amount of Token for the current address and save in context.
+   */
+  const getQuizTokenBalance = async (): Promise<void> => {
+    const { accounts, contract } = state;
+
+    try {
+      const balance = await contract.methods
+        .balanceOf(accounts[0])
+        .call();
+
+      dispatch({
+        type: ActionTypes.SET_QUIZ_TOKEN_BALANCE,
+        payload: balance,
+      });
+    } catch (error: any) {
+      handleError(error);
+    }
+  };
+
+  /**
+   * Save available trivias in context.
+   * @param data List os available trivias.
+   */
+  const setAvailableTrivias = (data: Array<SurveyInterface>): void => {
+    dispatch({
+      type: ActionTypes.SET_AVAILABLE_TRIVIAS,
+      payload: data,
     });
   };
 
-  return { handleConnect, handleChangeNetwork };
+  /**
+   * Update the trivia state and save the active in context.
+   * @param triviaId Trivia Id.
+   */
+  const initializeTrivia = (triviaId: number): void => {
+    const { availableTrivias } = state;
+
+    dispatch({
+      type: ActionTypes.INITIALIZE_TRIVIA,
+      payload: availableTrivias.find(({ id }) => id === triviaId)
+    });
+  };
+
+  /**
+   * Save user answers in context.
+   * @param answers Object with the anwsers.
+   */
+  const setTriviaAnswers = (answers: {[key: string]: number}) => {
+    dispatch({
+      type: ActionTypes.SET_TRIVIA_ANSWERS,
+      payload: answers
+    });
+  };
+
+  /**
+   * Submit users answers to the contract.
+   * @param formValues Values selected by the user.
+   */
+  const submitSurvey = async (
+    formValues: {[key: string]: number}
+  ): Promise<void> => {
+    const { accounts, contract, activeTrivia } = state;
+
+    dispatch({
+      type: ActionTypes.SUBMIT_TRIVIA,
+    });
+
+    try {
+      await contract.methods
+        .submit(activeTrivia.id, Object.values(formValues))
+        .send({ from: accounts[0] });
+    } catch (error: any) {
+      handleError(error);
+    } finally {
+      dispatch({
+        type: ActionTypes.FINISH_SUBMIT
+      });
+    }
+  };
+
+  /**
+   * Dismiss the error. Close the alert and clean the error state.
+   */
+  const handleDismissError = () => {
+    dispatch({
+      type: ActionTypes.DISMISS_ERROR,
+    });
+  }
+
+  return {
+    handleConnect,
+    handleChangeNetwork,
+    getQuizTokenBalance,
+    setAvailableTrivias,
+    initializeTrivia,
+    setTriviaAnswers,
+    submitSurvey,
+    handleDismissError,
+  };
 };
 
 export default actionDispatcher;
