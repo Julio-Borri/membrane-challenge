@@ -1,6 +1,12 @@
 .header {
   &-container {
-    background-color: gray;
+    background-color: map-get($palette, black);
     margin-bottom: 16px;
+    
+    .ant-page-header-heading-title {
+      color: map-get($palette, white);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
   }
 }

@@ -20,7 +20,7 @@ const useForm = () => {
   // Form States
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [timeAlive, setTimeAlive] = useState<number>(0);
-  const [formValues, setFormValues] = useState<{[key: string]: number}>();
+  const [formValues, setFormValues] = useState<{[key: string]: number}>({});
 
   /**
    * Controls the questions transitions. Keeps alive the question
