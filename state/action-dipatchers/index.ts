@@ -14,13 +14,6 @@ const actionDispatcher = (
   state: AppState,
   dispatch: Dispatch<Actions>
 ) => {
-  const {
-    SET_CURRENT_CHAIN,
-    SET_CONTRACT_DATA,
-    SET_QUIZ_TOKEN_BALANCE,
-    SET_AVAILABLE_TRIVIAS,
-    INITIALIZE_TRIVIA
-  } = ActionTypes
   const { WEB3_ERROR } = wording;
 
   /**
@@ -30,7 +23,7 @@ const actionDispatcher = (
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
 
     dispatch({
-      type: SET_CURRENT_CHAIN,
+      type: ActionTypes.SET_CURRENT_CHAIN,
       payload: chainId,
     });
   };
@@ -58,7 +51,7 @@ const actionDispatcher = (
 
       // Set web3, accounts, and contract to the state
       dispatch({
-        type: SET_CONTRACT_DATA,
+        type: ActionTypes.SET_CONTRACT_DATA,
         payload: {
           currentChain: `0x${networkId}`,
           web3,
@@ -96,7 +89,7 @@ const actionDispatcher = (
       .call();
 
     dispatch({
-      type: SET_QUIZ_TOKEN_BALANCE,
+      type: ActionTypes.SET_QUIZ_TOKEN_BALANCE,
       payload: balance,
     });
   };
@@ -107,7 +100,7 @@ const actionDispatcher = (
    */
   const setAvailableTrivias = (data: Array<SurveyInterface>): void => {
     dispatch({
-      type: SET_AVAILABLE_TRIVIAS,
+      type: ActionTypes.SET_AVAILABLE_TRIVIAS,
       payload: data,
     });
   };
@@ -115,13 +108,16 @@ const actionDispatcher = (
   const initializeTrivia = (triviaId: number): void => {
     const { availableTrivias } = state;
 
-    // const newTrivia = availableTrivias.find(({ id }) => (
-    //   id === triviaId
-    // ));
-
     dispatch({
-      type: INITIALIZE_TRIVIA,
+      type: ActionTypes.INITIALIZE_TRIVIA,
       payload: availableTrivias.find(({ id }) => id === triviaId)
+    });
+  };
+
+  const setTriviaAnswers = (answers: { [key: string]: string }) => {
+    dispatch({
+      type: ActionTypes.SET_TRIVIA_ANSWERS,
+      payload: answers
     });
   };
 
@@ -131,6 +127,7 @@ const actionDispatcher = (
     getQuizTokenBalance,
     setAvailableTrivias,
     initializeTrivia,
+    setTriviaAnswers,
   };
 };
 

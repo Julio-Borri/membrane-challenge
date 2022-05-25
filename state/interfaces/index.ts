@@ -20,6 +20,7 @@ export interface AppState {
   availableTrivias: Array<SurveyInterface>;
   activeTrivia: SurveyInterface;
   triviaState: TriviaStates;
+  answers: { [key: string]: string };
 }
 
 interface SurveyQuestionOptions {

@@ -22,7 +22,8 @@ const initialState: AppState = {
     image: '',
     questions: [],
   },
-  triviaState: TriviaStates.UNSTARTED, 
+  triviaState: TriviaStates.UNSTARTED,
+  answers: {},
 };
 
 const AppContext = createContext<{
@@ -37,22 +38,16 @@ const reducer = (
   state: AppState,
   action: Actions
 ): AppState => {
-  const {
-    SET_CURRENT_CHAIN,
-    SET_CONTRACT_DATA,
-    SET_QUIZ_TOKEN_BALANCE,
-    SET_AVAILABLE_TRIVIAS,
-    INITIALIZE_TRIVIA
-  } = ActionTypes
+
 
   switch (action.type) {
-    case SET_CURRENT_CHAIN:
+    case ActionTypes.SET_CURRENT_CHAIN:
       return {
         ...state,
         currentChain: action.payload,
       };
 
-    case SET_CONTRACT_DATA:
+    case ActionTypes.SET_CONTRACT_DATA:
       return {
         ...state,
         web3: action.payload.web3,
@@ -62,23 +57,30 @@ const reducer = (
         networkState: NetworkStates.CONNECTED,
       };
 
-    case SET_QUIZ_TOKEN_BALANCE:
+    case ActionTypes.SET_QUIZ_TOKEN_BALANCE:
       return {
         ...state,
         quizTokenBalance: action.payload,
       };
 
-    case SET_AVAILABLE_TRIVIAS:
+    case ActionTypes.SET_AVAILABLE_TRIVIAS:
       return {
         ...state,
         availableTrivias: action.payload,
       };
 
-    case INITIALIZE_TRIVIA:
+    case ActionTypes.INITIALIZE_TRIVIA:
       return {
         ...state,
         triviaState: TriviaStates.ONGOING,
         activeTrivia: action.payload,
+      };
+
+    case ActionTypes.SET_TRIVIA_ANSWERS:
+      return {
+        ...state,
+        triviaState: TriviaStates.TOSUBMIT,
+        answers: action.payload,
       };
 
     default:

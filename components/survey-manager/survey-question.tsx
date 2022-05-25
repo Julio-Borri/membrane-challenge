@@ -1,3 +1,6 @@
+// Module dependencies
+import type { RadioChangeEvent } from 'antd';
+
 // UI Components
 import { Form, Avatar, Space, Radio, Typography } from 'antd';
 
@@ -7,12 +10,17 @@ import { SurveyQuestion } from '../../state/interfaces';
 const { Text } = Typography;
 
 
-const SurveyQuestion: React.FC<SurveyQuestion> = ({
-  text,
-  image,
-  lifetimeSeconds,
-  options
+interface SurveyQuestionProps {
+  question: SurveyQuestion;
+  handleRadioChange: ({ target }: RadioChangeEvent) => void;
+}
+
+const SurveyQuestion: React.FC<SurveyQuestionProps> = ({
+  question,
+  handleRadioChange,
 }) => {
+  const { text, image, lifetimeSeconds, options} = question;
+
   return (
     <Form.Item
       name={text}
@@ -26,10 +34,10 @@ const SurveyQuestion: React.FC<SurveyQuestion> = ({
         </Space>
       )}
     >
-      <Radio.Group>
+      <Radio.Group onChange={handleRadioChange} name={text}>
         <Space direction="vertical">
-          {options.map(({ text }) => (
-            <Radio value={text} key={text}>{text}</Radio>
+          {options.map(({ text }, index) => (
+            <Radio value={index} key={text}>{text}</Radio>
           ))}
         </Space>
       </Radio.Group>

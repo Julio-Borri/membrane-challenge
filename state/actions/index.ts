@@ -28,9 +28,18 @@ interface setAvailableTriviasAction {
   payload: Array<SurveyInterface>;
 }
 
-interface initializeTriviaAction {
+interface InitializeTriviaAction {
   type: ActionTypes.INITIALIZE_TRIVIA;
   payload: SurveyInterface;
+}
+
+interface SetTriviaAnwersAction {
+  type: ActionTypes.SET_TRIVIA_ANSWERS;
+  payload: { [key: string]: string };
+}
+
+interface SubmitTriviaAction {
+  type: ActionTypes.SUBMIT_TRIVIA;
 }
 
 export type Actions =
@@ -38,4 +47,6 @@ export type Actions =
   | SetContractDataAction
   | SetQuizTokenBalanceAction
   | setAvailableTriviasAction
-  | initializeTriviaAction;
+  | InitializeTriviaAction
+  | SetTriviaAnwersAction
+  | SubmitTriviaAction;
