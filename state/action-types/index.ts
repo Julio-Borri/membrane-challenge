@@ -6,6 +6,9 @@ enum ActionTypes {
   INITIALIZE_TRIVIA = 'initialize_trivia',
   SET_TRIVIA_ANSWERS = 'set_trivia_anwers',
   SUBMIT_TRIVIA = 'submit_trivia',
+  FINISH_SUBMIT = 'finish_submit',
+  SET_ERROR = 'set_error',
+  DISMISS_ERROR = 'dismiss_error',
 }
 
 export { ActionTypes };

@@ -37,7 +37,9 @@ const SurveyManager: React.FC = () => {
 
       {!fullyConnected && <Text>{COMPLETE_CONNECTION}</Text>}
 
-      <SurveyForm />
+      {triviaState !== TriviaStates.UNSTARTED && (
+        <SurveyForm />
+      )}
     </div>
   );
 };

@@ -16,23 +16,10 @@ const useForm = () => {
   const { activeTrivia, contract, accounts } = state;
   const { questions, id: surveyId } = activeTrivia;
 
-  const { UNANSWERED } = wording;
-
-  const getFormValuesInitialState = () => {
-    let initialValues = {};
-    questions.map(({ text }) => {
-      initialValues = {
-        ...initialValues,
-        [text]: UNANSWERED,
-      }
-    })
-
-    return initialValues;
-  };
 
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [timeAlive, setTimeAlive] = useState<number>(0);
-  const [formValues, setFormValues] = useState(getFormValuesInitialState());
+  const [formValues, setFormValues] = useState<{[key: string]: number}>();
 
 
   useEffect(() => {
@@ -45,7 +32,6 @@ const useForm = () => {
         setCurrentQuestion(prevQuestion => prevQuestion + 1);
         setTimeAlive(0);
       } else {
-        console.log('to submit'); //
         actions.setTriviaAnswers(formValues);
         clearInterval(timer);
       }
@@ -64,14 +50,15 @@ const useForm = () => {
   };
 
   const handleSubmitSurvey = async (): Promise<void> => {
-    try {
-      await contract.methods
-        .submit(surveyId, Object.values(formValues))
-        .send({ from: accounts[0] });
-    } catch (error) {
-      alert(`Failed submitting the quiz.`);
-      console.error(error);
-    }
+    // try {
+    //   await contract.methods
+    //     .submit(surveyId, Object.values(formValues))
+    //     .send({ from: accounts[0] });
+    // } catch (error) {
+    //   alert(`Failed submitting the quiz.`);
+    //   console.error(error);
+    // }
+    actions.submitSurvey(formValues);
   };
   
   return {

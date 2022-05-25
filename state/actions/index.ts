@@ -1,6 +1,6 @@
 // Module dependencies
 import { ActionTypes } from '../action-types';
-import { SurveyInterface, TriviaStates } from '../interfaces';
+import { SurveyInterface } from '../interfaces';
 
 
 interface SetCurrentChainAction {
@@ -35,11 +35,24 @@ interface InitializeTriviaAction {
 
 interface SetTriviaAnwersAction {
   type: ActionTypes.SET_TRIVIA_ANSWERS;
-  payload: { [key: string]: string };
+  payload: {[key: string]: number};
 }
 
 interface SubmitTriviaAction {
   type: ActionTypes.SUBMIT_TRIVIA;
+}
+
+interface FinishSubmitTriviaAction {
+  type: ActionTypes.FINISH_SUBMIT;
+}
+
+interface SetErrorAction {
+  type: ActionTypes.SET_ERROR;
+  payload: string;
+}
+
+interface DismissErrorAction {
+  type: ActionTypes.DISMISS_ERROR;
 }
 
 export type Actions =
@@ -49,4 +62,7 @@ export type Actions =
   | setAvailableTriviasAction
   | InitializeTriviaAction
   | SetTriviaAnwersAction
-  | SubmitTriviaAction;
+  | SubmitTriviaAction
+  | FinishSubmitTriviaAction
+  | SetErrorAction
+  | DismissErrorAction;

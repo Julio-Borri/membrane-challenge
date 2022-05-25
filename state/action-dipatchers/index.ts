@@ -16,6 +16,14 @@ const actionDispatcher = (
 ) => {
   const { WEB3_ERROR } = wording;
 
+  const handleError = (error: ProviderRpcError): void => {
+    dispatch({
+      type: ActionTypes.SET_ERROR,
+      payload: error.message,
+    });
+  }
+
+
   /**
    * Detect the current network chain Id and save it in context.
    */
@@ -114,12 +122,40 @@ const actionDispatcher = (
     });
   };
 
-  const setTriviaAnswers = (answers: { [key: string]: string }) => {
+  const setTriviaAnswers = (answers: {[key: string]: number}) => {
     dispatch({
       type: ActionTypes.SET_TRIVIA_ANSWERS,
       payload: answers
     });
   };
+
+  const submitSurvey = async (
+    formValues: {[key: string]: number}
+  ): Promise<void> => {
+    const { accounts, contract, activeTrivia } = state;
+
+    dispatch({
+      type: ActionTypes.SUBMIT_TRIVIA,
+    });
+
+    try {
+      await contract.methods
+        .submit(activeTrivia.id, Object.values(formValues))
+        .send({ from: accounts[0] });
+    } catch (error: any) {
+      handleError(error);
+    } finally {
+      dispatch({
+        type: ActionTypes.FINISH_SUBMIT
+      });
+    }
+  };
+
+  const handleDismissError = () => {
+    dispatch({
+      type: ActionTypes.DISMISS_ERROR,
+    });
+  }
 
   return {
     handleConnect,
@@ -128,6 +164,8 @@ const actionDispatcher = (
     setAvailableTrivias,
     initializeTrivia,
     setTriviaAnswers,
+    submitSurvey,
+    handleDismissError,
   };
 };
 

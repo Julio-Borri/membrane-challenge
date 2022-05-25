@@ -6,14 +6,14 @@ import { ActionTypes } from '../action-types/index';
 
 
 const initialState: AppState = {
-  // NetworkState
+  // Network States
   web3: null,
   accounts: null,
   contract: null,
   currentChain: '',
   networkState: NetworkStates.UNCONNECTED,
 
-  // Trivia State
+  // Trivia States
   quizTokenBalance: '0',
   availableTrivias: [],
   activeTrivia: {
@@ -24,6 +24,11 @@ const initialState: AppState = {
   },
   triviaState: TriviaStates.UNSTARTED,
   answers: {},
+
+  // Global States
+  loading: false,
+  error: false,
+  errorMsg: '',
 };
 
 const AppContext = createContext<{
@@ -81,6 +86,40 @@ const reducer = (
         ...state,
         triviaState: TriviaStates.TOSUBMIT,
         answers: action.payload,
+      };
+
+    case ActionTypes.SUBMIT_TRIVIA:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ActionTypes.FINISH_SUBMIT:
+      return {
+        ...state,
+        loading: false,
+        triviaState: TriviaStates.UNSTARTED,
+        answers: {},
+        activeTrivia: {
+          id: 0,
+          title: '',
+          image: '',
+          questions: [],
+        },
+      };
+
+    case ActionTypes.SET_ERROR:
+      return {
+        ...state,
+        error: true,
+        errorMsg: action.payload,
+      };
+
+    case ActionTypes.DISMISS_ERROR:
+      return {
+        ...state,
+        error: false,
+        errorMsg: '',
       };
 
     default:

@@ -9,6 +9,7 @@ import actionDispatcher from '../state/action-dipatchers';
 
 // UI Components
 import Head from 'next/head';
+import { Alert, Spin } from 'antd';
 import NetworkManager from '../components/network-manager';
 import SurveyManager from '../components/survey-manager';
 
@@ -24,7 +25,8 @@ const Home: NextPage<HomeProps> = ({ availableTrivias }) => {
   const { state, dispatch } = useContext(AppContext);
   const actions = actionDispatcher(state, dispatch);
 
-  const { PAGE_TITLE, PAGE_SUBTITLE } = wording;
+  const { error, errorMsg, loading } = state;
+  const { PAGE_TITLE, PAGE_SUBTITLE, WEB3_ERROR } = wording;
 
   useEffect(() => {
     actions.setAvailableTrivias(availableTrivias);
