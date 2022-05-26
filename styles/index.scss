@@ -3,12 +3,18 @@
 
 // Custom Styles
 @import './globals.scss';
+@import './_variables.scss';
 @import './components/custom-header.scss';
 @import './components/network-manager.scss';
 @import './components/survey.scss';
 
 .ant-layout {
   height: 100vh;
+}
+
+.home-container {
+  max-width: 1000px;
+  margin: auto;
 }
 
 .spin-container {

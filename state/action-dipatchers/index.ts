@@ -145,10 +145,17 @@ const actionDispatcher = (
    * @param answers Object with the anwsers.
    */
   const setTriviaAnswers = (answers: {[key: string]: number}) => {
-    dispatch({
-      type: ActionTypes.SET_TRIVIA_ANSWERS,
-      payload: answers
-    });
+    if (Object.keys(answers).length === 0) {
+      dispatch({
+        type: ActionTypes.FINISH_SUBMIT
+      });
+    } else {
+      dispatch({
+        type: ActionTypes.SET_TRIVIA_ANSWERS,
+        payload: answers
+      });
+    }
+
   };
 
   /**
@@ -174,6 +181,8 @@ const actionDispatcher = (
       dispatch({
         type: ActionTypes.FINISH_SUBMIT
       });
+
+      getQuizTokenBalance();
     }
   };
 

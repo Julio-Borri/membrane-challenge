@@ -1,6 +1,6 @@
 // General wording
 const wording: { [key: string]: string } = {
-  PAGE_TITLE: 'Membrane FE Challenge', 
+  PAGE_TITLE: 'Membrane - FE Challenge', 
   PAGE_SUBTITLE: 'FE Challenge fro RatherLabs',
 
   // Network Manager

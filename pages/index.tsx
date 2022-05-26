@@ -34,7 +34,7 @@ const Home: NextPage<HomeProps> = ({ availableTrivias }) => {
   }, [])
   
   return (
-    <div>
+    <div className="home-container">
       <Head>
         <title>{PAGE_TITLE}</title>
         <meta name={PAGE_TITLE} content={PAGE_SUBTITLE} />
